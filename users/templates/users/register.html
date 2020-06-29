@@ -1,0 +1,104 @@
+{% extends 'users/base.html' %}
+{% load form_extras %}
+{% block title %}
+    Register
+{% endblock %}
+{% block body %}
+    <style>
+    .popover-body ul {
+        padding-left: 15px;
+        margin-bottom: 0;
+    }
+    </style>
+    <div class="row justify-content-center">
+        {% if form.non_field_errors %}
+              <div class="alert alert-danger" role="alert" style="margin-top: 10px; width: 30%;">
+                {% for error in form.non_field_errors %}
+                  {{ error }}
+                {% endfor %}
+              </div>
+        {% endif %}
+        <div class="card" style="margin-top: 10px; width: 30%;">
+            <div class="card-header">
+                <h4>Register</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <p>
+                            <label for="id_username">Username*</label>
+                            {% if form.username.errors %}
+                                {{ form.username }}
+                                {% for error in form.username.errors %}
+                                    <p style="color: red; font-size: 0.8rem;margin-top: -12px;">
+                                        {{ error }}
+                                    </p>
+                                {% endfor %}
+                            {% else %}
+                                {{ form.username }}
+                            {% endif %}
+                        </p>
+                        <p>
+                            <label for="id_email">Email*</label>
+                            {% if form.email.errors %}
+                                {{ form.email }}
+                                {% for error in form.email.errors %}
+                                    <p style="color: red; font-size: 0.8rem;margin-top: -12px;">
+                                        {{ error }}
+                                    </p>
+                                {% endfor %}
+                            {% else %}
+                                {{ form.email }}
+                            {% endif %}
+                        </p>
+                        <p>
+                            <label for="id_password1">
+                                Password
+                                <span id="toggle" data-toggle="popover" class="material-icons badge" style="display: block; float: right; font-size: 1.1rem">
+                                        help_outline
+                                </span>
+                            </label>
+                            <script>
+                                $(function () {
+                                  $('#toggle').popover({
+                                      trigger: 'hover',
+                                      html: true,
+                                      content: "{{ form.password1.help_text }}"
+                                  })
+                                })
+                            </script>
+
+                            {% if form.password2.errors %}
+                                {{ form.password1|addClass:"form-control is-invalid" }}
+                                {% for error in form.password2.errors %}
+                                    <p style="color: red; font-size: 0.8rem;margin-top: -12px;">
+                                        {{ error }}
+                                    </p>
+                                {% endfor %}
+                            {% else %}
+                                {{ form.password1|addClass:"form-control" }}
+                            {% endif %}
+                        </p>
+                        <p>
+                            <label for="id_password2">Password confirmation</label>
+                            {% if form.password2.errors %}
+                                {{ form.password2|addClass:"form-control is-invalid" }}
+                                {% for error in form.password2.errors %}
+                                    <p style="color: red; font-size: 0.8rem;margin-top: -12px;">
+                                        {{ error }}
+                                    </p>
+                                {% endfor %}
+                            {% else %}
+                                {{ form.password2|addClass:"form-control"}}
+                            {% endif %}
+                        </p>
+                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                        <span style="margin-top:7px; float: right;">Already have an account? <a href="{% url 'login' %}"> Log In</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

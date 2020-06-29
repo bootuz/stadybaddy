@@ -1,0 +1,50 @@
+{% extends 'users/base.html' %}
+{% load form_extras %}
+{% block title %}
+    Log in
+{% endblock title %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" style="margin-top: 10px; width: 30%;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger" role="alert" style="margin-top: 10px; width: 30%;">
+            {% for error in form.non_field_errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+    </div>
+    <div class="row justify-content-center">
+        <div class="card" style="margin-top: 10px; width: 30%;">
+            <div class="card-header">
+                <h4>Log in</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <p>
+                            <label for="id_username">Username</label>
+                            {{ form.username|addClass:"form-control" }}
+                        </p>
+                        <p>
+                            <label for="id_username">Password</label>
+                            {{ form.password|addClass:"form-control" }}
+                        </p>
+                        <button type="submit" class="btn btn-primary">Log in</button>
+                        <span style="margin-top:7px; float: right;"><a href="{% url 'password-reset' %}">Forgot password?</a></span>
+                        <hr>
+                        Need an account? <a href="{% url 'register' %}">Sign up here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

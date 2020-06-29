@@ -1,0 +1,68 @@
+{% extends 'users/base.html' %}
+{% block title %}
+    Your profile
+{% endblock %}
+{% block body %}
+    <div class="container">
+        {% if messages %}
+            <div class="row justify-content-center">
+                {% for message in messages %}
+                    <div class="alert alert-dismissible fade show alert-{{ message.tags }}" style="margin-top: 10px; width: 30%;">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="row justify-content-center">
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert" style="margin-top: 10px; width: 30%;">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="card" style="margin-top: 10px; min-width: 50%; max-width: 75%">
+                <div class="card-header">
+                    <h4 style="display: inline">
+                        {{ user.username }}
+                        <a href="{% url 'edit_profile' %}">
+                            <span style="font-size: 1.3rem; margin-left: 10px; vertical-align: middle;" class="material-icons">edit</span>
+                        </a>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <img style="float: left; width: 200px; height: 200px;" src="{{ profile.image.url }}" alt="">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h5>First name</h5>
+                            <p style="float: left">{{ profile.user.first_name }}</p>
+                        </div>
+                        <div class="col-md-5">
+                            <h5>Last name</h5>
+                            <p style="">{{ profile.user.last_name }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h5>Location</h5>
+                            <p style="float: left">{{ profile.location }}</p>
+                        </div>
+                        <div class="col-md-5">
+                            <h5>Email</h5>
+                            <p style="">{{ profile.user.email }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-11">
+                            <h5>Bio</h5>
+                            <p style="">{{ profile.bio }}</p>
+                        </div>
+                    </div>
+                </div> {# card body #}
+            </div> {# card #}
+        </div> {# row #}
+   </div> {# container #}
+{% endblock body %}
